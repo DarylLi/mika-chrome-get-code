@@ -1,19 +1,22 @@
 {
-    "manifest_version": 2,  // manifest.json 文件版本号
+    "manifest_version": 3,  // manifest.json 文件版本号
     "name": "codepen代码下载",  // 插件名称，字符串类型
     "version": "1.0.0",  // 插件版本号，字符串类型
     "description": "codepen代码下载 🍰", // 插件描述，字符串类型
     "permissions": [ // 权限，该字段定义了插件需要访问的资源和功能，例如浏览器标签、存储、网络等等
-        "activeTab" // 允许插件访问当前激活的标签页
+        "activeTab",
+        "scripting" // 在manifest v3中需要添加scripting权限以执行脚本
       ],
     "icons":{
     "48":"48.png"
     },
-    "browser_action": { // 浏览器动作，该字段用于定义当用户单击浏览器操作按钮时执行的操作
+    "action": { // 在manifest v3中browser_action改为action
         "default_title": "codepen代码下载～", // 鼠标指针悬停在浏览器操作按钮上显示的默认标题
         "default_popup": "index.html", // 弹出窗口的 HTML 文件路径
         "default_icon": "48.png"
     },
-    // 此属性对应用程序可以加载的资源设置限制
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    // 在manifest v3中content_security_policy格式有所改变
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    }
 }

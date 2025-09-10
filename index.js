@@ -1,7 +1,10 @@
 // 下载
 // document.getElementById('getCode').addEventListener('click', function () {
-chrome.tabs.executeScript({
-  code: `(async function(){
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.scripting.executeScript({
+    target: {tabId: tabs[0].id},
+    func: function() {
+      (async () => {
         function downloadURL(url, name) {
         var link = document.createElement('a')
         link.download = name
@@ -18,25 +21,25 @@ chrome.tabs.executeScript({
         downloadURL(url, name || 'unknow.txt')
       }
       function getExtraLinkStatic(code){
-        return code.split("https").filter(e=>e.match(/\\.(jpg|png|gif)/)).map(e=>((e.split('://')[1]||'').match(/.*(jpg|png|gif)/)||[])[0]).filter(e=>e && (e.includes('/')||e.includes('.')))
+        return code.split("https").filter(e=>e.match(/\.(jpg|png|gif)/)).map(e=>((e.split('://')[1]||'').match(/.*(jpg|png|gif)/)||[])[0]).filter(e=>e && (e.includes('/')||e.includes('.')))
       }
       function getExtraSvgLinkStatic(code){
-        return code.split("https").filter(e=>e.match(/\\.svg/)).map(e=>((e.split('://')[1]||'').match(/.*svg/)||[])[0]).filter(e=>e && (e.includes('/')||e.includes('.')))
+        return code.split("https").filter(e=>e.match(/\.svg/)).map(e=>((e.split('://')[1]||'').match(/.*svg/)||[])[0]).filter(e=>e && (e.includes('/')||e.includes('.')))
       }
       const srcdoc =
         document.getElementById('result').getAttribute('srcdoc') || ''
       const styleContent = (srcdoc
-        .match(/<style>[\\s\\S]*<\\/style>/)?.[0]||'')
+        .match(/<style>[\s\S]*?<\/style>/)?.[0]||'')
         .replaceAll(/<.?style>/g, '');
       let scriptContent = (srcdoc
-        .match(/<script id="rendered-js"(.*)>[\\s\\S]*<\\/script>/)?.[0]||'')
+        .match(/<script id="rendered-js"(.*)>[\s\S]*?<\/script>/)?.[0]||'')
         .replaceAll(/<.*script.*>/g, '');
         scriptContent = (scriptContent||'').replaceAll(
         /window.CP|if.*window.CP/g,
         (match) => '//'+match);
       const htmlContent = (srcdoc
-        .match(/<body translate="no">[\\s\\S]*<script id="rendered-js"(.*)>/)?.[0]||srcdoc
-        .match(/<body translate="no">[\\s\\S]*<.*body>/)?.[0]||'')
+        .match(/<body translate="no">[\s\S]*<script id="rendered-js"(.*)>/)?.[0]||srcdoc
+        .match(/<body translate="no">[\s\S]*<.*body>/)?.[0]||'')
         .replaceAll(/<body translate="no">|<script id="rendered-js"(.*)>|<.*body>/g, '');
       //额外cdn js链接获取
       const cdnList = (htmlContent.match(/<script(.*)src=.*('|")/g)||[]).map(e=>e.match(/http(.*)js/)?.[0]);
@@ -128,5 +131,7 @@ chrome.tabs.executeScript({
         },
         method: "post",
       });
-    })()`,
+      })();
+    }
+  });
 });
