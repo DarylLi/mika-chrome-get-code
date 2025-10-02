@@ -16,7 +16,7 @@ step2:
 
 enter some codepen pages with fullpage mode: as 'https://cdpn.io/matt-cannon/fullpage/XWvweNw' (attention:'fullpage' is contained under the link) and use codepen plugin to dl:
 
-进入codepen页面通过预览形式如：'https://cdpn.io/matt-cannon/fullpage/XWvweNw'（注意fullpage是包含在链接中的）并且通过插件进行下载：
+进入codepen页面通过预览形式如：'https://cdpn.io/matt-cannon/fullpage/XWvweNw' (注意fullpage是包含在链接中的)并且通过插件进行下载：
 
 <img width="673" alt="截屏2024-11-21 19 11 37" src="https://github.com/user-attachments/assets/fdf6e721-2500-4158-be56-1972427a13be">
 
